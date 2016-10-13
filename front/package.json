@@ -1,0 +1,25 @@
+{
+  "name": "front",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "assets": "mkdir dist; cp src/index.html dist/index.html; cp -rf src/assets dist/assets 2> /dev/null; true",
+    "css": "node-sass --include-path node_modules src/style.scss dist/style.css",
+    "css-watch": "node-sass -w --include-path node_modules src/style.scss dist/style.css",
+    "build-dist": "npm run assets; npm run css; browserify -t babelify -t envify src/index.js | uglifyjs -c > dist/index.js",
+    "build-dev": "npm run assets; npm run css; npm run assets; browserify -t babelify -t envify src/index.js | uglifyjs -c > dist/index.js",
+    "watch": "npm run assets; npm run build-dev; npm run css-watch & watchify -v -t babelify -t envify -t browserify-ngannotate -o dist/index.js src/index.js"
+  },
+  "author": "You",
+  "license": "ISC",
+  "dependencies": {
+    "babelify": "^7.3.0",
+    "browserify": "^13.1.0",
+    "browserify-ngannotate": "^2.0.0",
+    "envify": "^3.4.1",
+    "node-sass": "^3.10.1",
+    "uglifyjs": "^2.4.10",
+    "watchify": "^3.7.0"
+  }
+}
